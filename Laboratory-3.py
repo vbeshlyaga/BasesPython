@@ -425,6 +425,73 @@ def taskNine():
         else:
             print("Некорректный ввод. Пожалуйста, выберите действие от 1 до 6.")
 
+
+# Task 11
+def read_sales_data(filename):
+    sales = {}
+    with open(filename, 'r', encoding='utf-8') as file:
+        for line in file:
+            product, quantity, price = line.strip().split('-')
+            quantity, price = int(quantity), float(price)
+            
+            sales[product] = sales.get(product, 0) + quantity * price
+    return sales
+
+def write_new_sale(filename, product, quantity, price):
+    with open(filename, 'a', encoding='utf-8') as file:
+        file.write(f"{product}-{quantity}-{price}\n")
+
+def taskEleven():
+    filename = './files/lab_3_task_11.txt'
+    
+    sales = read_sales_data(filename)
+    
+    if sales:
+        max_product = max(sales, key=sales.get)
+        min_product = min(sales, key=sales.get)
+        print("Общая сумма продаж по продуктам:")
+        for product, total in sales.items():
+            print(f"{product}: {total:.2f}")
+        print(f"\nПродукт с наибольшей суммой продаж: {max_product} ({sales[max_product]:.2f})")
+        print(f"Продукт с наименьшей суммой продаж: {min_product} ({sales[min_product]:.2f})")
+    else:
+        print("Данные о продажах отсутствуют.")
+    
+    add_more = input("\nХотите добавить новую запись о продаже? (да/нет): ").strip().lower()
+    if add_more == 'да':
+        product = input("Введите название продукта: ")
+        quantity = int(input("Введите количество: "))
+        price = float(input("Введите цену: "))
+        write_new_sale(filename, product, quantity, price)
+        print("Новая запись добавлена. Пересчитываем суммы продаж.")
+
+taskEleven()
+
+# Task 12
+def taskTwelve():
+    search_word = input("Введите слово для поиска: ").lower()
+
+    occurrences = 0
+    matching_lines = []
+
+
+    with open('./files/lab_3_task_12.txt', 'r', encoding='utf-8') as file:
+        for line_number, line in enumerate(file, start=1):
+            if search_word in line.lower():
+                occurrences += line.lower().count(search_word)
+                matching_lines.append(f"Строка {line_number}: {line.strip()}")
+
+
+    print(f"Количество вхождений слова '{search_word}': {occurrences}")
+    if occurrences > 0:
+        print("Строки, содержащие это слово:")
+        for match in matching_lines:
+            print(match)
+    else:
+        print("Слово не найдено в файле.")
+
+
+# Task 13
 def taskThirteen():
     with open('./files/lab_3_task_13.txt', 'r', encoding='utf-8') as original_file:
         lines = [line.strip() for line in original_file]
@@ -432,8 +499,6 @@ def taskThirteen():
     with open('./files/lab_3_task13_reversed.txt', 'w', encoding='utf-8') as reversed_file:
         for line in reversed(lines):
             reversed_file.write(line + '\n')
-            
+
     print("Файл успешно создан с перевернутыми строками.")
 
-
-taskThirteen()
