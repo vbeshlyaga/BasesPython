@@ -425,4 +425,15 @@ def taskNine():
         else:
             print("Некорректный ввод. Пожалуйста, выберите действие от 1 до 6.")
 
-taskNine()
+def taskThirteen():
+    with open('./files/lab_3_task_13.txt', 'r', encoding='utf-8') as original_file:
+        lines = [line.strip() for line in original_file]
+
+    with open('./files/lab_3_task13_reversed.txt', 'w', encoding='utf-8') as reversed_file:
+        for line in reversed(lines):
+            reversed_file.write(line + '\n')
+            
+    print("Файл успешно создан с перевернутыми строками.")
+
+
+taskThirteen()
