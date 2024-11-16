@@ -502,3 +502,6 @@ def taskThirteen():
 
     print("Файл успешно создан с перевернутыми строками.")
 
+# Task 14
+
+import pandas as pd
