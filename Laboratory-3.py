@@ -465,8 +465,6 @@ def taskEleven():
         write_new_sale(filename, product, quantity, price)
         print("Новая запись добавлена. Пересчитываем суммы продаж.")
 
-taskEleven()
-
 # Task 12
 def taskTwelve():
     search_word = input("Введите слово для поиска: ").lower()
@@ -502,6 +500,84 @@ def taskThirteen():
 
     print("Файл успешно создан с перевернутыми строками.")
 
-# Task 14
 
+# Task 14
 import pandas as pd
+
+
+def load_data(file_name):
+    try:
+        return pd.read_csv(file_name, sep=":", names=["Имя", "Оценка"], header=0)
+    except FileNotFoundError:
+        return pd.DataFrame(columns=["Имя", "Оценка"])
+
+def calculate_average(data):
+    return data["Оценка"].mean()
+
+def get_below_average_students(data, average):
+    return data[data["Оценка"] < average]
+
+def save_data(data, file_name):
+    data.to_csv(file_name, sep=":", index=False, header=True)
+
+def add_student(file_name, name, grade):
+    data = load_data(file_name)
+    new_student = pd.DataFrame({"Имя": [name], "Оценка": [grade]})
+    data = pd.concat([data, new_student], ignore_index=True)
+    save_data(data, file_name)
+    return data
+
+def main():
+    file_name = "./files/lab_3_task_14.csv"
+    while True:
+        print("\nВыберите действие:")
+        print("1. Показать студентов с оценками ниже средней")
+        print("2. Добавить нового студента")
+        print("3. Пересчитать среднюю оценку")
+        print("4. Выйти")
+        
+        choice = input("Введите номер действия: ")
+        
+        if choice == "1":
+            data = load_data(file_name)
+            if data.empty:
+                print("Файл пуст. Добавьте студентов.")
+                continue
+            data["Оценка"] = pd.to_numeric(data["Оценка"], errors="coerce")
+            average = calculate_average(data)
+            print(f"Средняя оценка: {average:.2f}")
+            below_average_students = get_below_average_students(data, average)
+            if below_average_students.empty:
+                print("Нет студентов с оценками ниже средней.")
+            else:
+                print("Студенты с оценками ниже средней:")
+                print(below_average_students)
+        
+        elif choice == "2":
+            name = input("Введите имя студента: ")
+            try:
+                grade = float(input("Введите оценку студента: "))
+            except ValueError:
+                print("Оценка должна быть числом.")
+                continue
+            data = add_student(file_name, name, grade)
+            print("Студент добавлен. Текущие данные:")
+            print(data)
+        
+        elif choice == "3":
+            data = load_data(file_name)
+            if data.empty:
+                print("Файл пуст. Добавьте студентов.")
+                continue
+            data["Оценка"] = pd.to_numeric(data["Оценка"], errors="coerce")
+            average = calculate_average(data)
+            print(f"Средняя оценка пересчитана: {average:.2f}")
+        
+        elif choice == "4":
+            print("Выход из программы.")
+            break
+        
+        else:
+            print("Неверный выбор. Попробуйте снова.")
+
+main()
