@@ -527,7 +527,7 @@ def add_student(file_name, name, grade):
     save_data(data, file_name)
     return data
 
-def main():
+def taskFourteen():
     file_name = "./files/lab_3_task_14.csv"
     while True:
         print("\nВыберите действие:")
@@ -579,5 +579,3 @@ def main():
         
         else:
             print("Неверный выбор. Попробуйте снова.")
-
-main()
