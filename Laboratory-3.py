@@ -511,14 +511,18 @@ def load_data(file_name):
     except FileNotFoundError:
         return pd.DataFrame(columns=["Имя", "Оценка"])
 
+
 def calculate_average(data):
     return data["Оценка"].mean()
+
 
 def get_below_average_students(data, average):
     return data[data["Оценка"] < average]
 
+
 def save_data(data, file_name):
     data.to_csv(file_name, sep=":", index=False, header=True)
+
 
 def add_student(file_name, name, grade):
     data = load_data(file_name)
@@ -526,6 +530,7 @@ def add_student(file_name, name, grade):
     data = pd.concat([data, new_student], ignore_index=True)
     save_data(data, file_name)
     return data
+
 
 def taskFourteen():
     file_name = "./files/lab_3_task_14.csv"
@@ -580,4 +585,68 @@ def taskFourteen():
         else:
             print("Неверный выбор. Попробуйте снова.")
 
-main()
+
+# Task 15
+import datetime
+
+LOG_FILE = "files/errors.log"
+
+
+def log_error(error_message):
+    with open(LOG_FILE, "a") as file:
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        file.write(f"[{timestamp}] {error_message}\n")
+
+
+def get_last_errors(n=5):
+    try:
+        with open(LOG_FILE, "r") as file:
+            lines = file.readlines()
+            return lines[-n:] if len(lines) >= n else lines
+    except FileNotFoundError:
+        return ["Лог-файл отсутствует."]
+
+
+def clear_logs():
+    open(LOG_FILE, "w").close()
+
+
+def TaskFifteen():
+    while True:
+        print("\nМеню:")
+        print("1. Ввести число")
+        print("2. Показать последние 5 ошибок")
+        print("3. Очистить лог-файл")
+        print("4. Выйти")
+        
+        choice = input("Выберите действие: ")
+        
+        if choice == "1":
+            try:
+                num = int(input("Введите целое число: "))
+                print(f"Вы ввели число: {num}")
+            except ValueError as e:
+                error_message = "Ошибка: Неверный формат данных (ожидается целое число)."
+                print(error_message)
+                log_error(error_message)
+        elif choice == "2":
+            errors = get_last_errors()
+            print("\nПоследние ошибки:")
+            if errors:
+                for error in errors:
+                    print(error.strip())
+            else:
+                print("Ошибки отсутствуют.")
+        elif choice == "3":
+            confirm = input("Вы уверены, что хотите очистить лог-файл? (да/нет): ")
+            if confirm.lower() == "да":
+                clear_logs()
+                print("Лог-файл очищен.")
+            else:
+                print("Очистка отменена.")
+        elif choice == "4":
+            print("Выход из программы.")
+            break
+        else:
+            print("Неверный выбор. Пожалуйста, попробуйте снова.")
+
