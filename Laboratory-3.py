@@ -1,51 +1,56 @@
 # Task 1
 mathOperations = {
-    '*': lambda x,y: x * y,
-    '/': lambda x,y: x / y if y != 0 else 'Делить на 0 нельзя!!!!!!!!!!',
-    '+': lambda x,y: x + y,
-    '-': lambda x,y: x - y
+    '*': lambda x, y: x * y,
+    '/': lambda x, y: x / y if y != 0 else 'Делить на 0 нельзя!!!!!!!!!!',
+    '+': lambda x, y: x + y,
+    '-': lambda x, y: x - y
 }
+
+
 def getNumbers():
     try:
-        x = float(input("Введите Ваше первое число: "))
-        y = float(input("Введите Ваше второе число: "))
-        operation = input("Введите операцию (например, +, -, *, /): ")
+        x = float(input('Введите Ваше первое число: '))
+        y = float(input('Введите Ваше второе число: '))
+        operation = input('Введите операцию (например, +, -, *, /): ')
 
         if operation in mathOperations:
             result = mathOperations[operation](x, y)
             print(result)
     except ValueError:
-        print("Что-то пошло не так")
+        print('Что-то пошло не так')
+
 
 def newOperation():
-    new_symbol = input("Введите символ новой операции: ")
+    new_symbol = input('Введите символ новой операции: ')
 
     if new_symbol in mathOperations:
-        print("Такая операция уже существует.")
+        print('Такая операция уже существует.')
         return
     
-    code = input(f"Введите выражение для операции с переменными 'x' и 'y' (например, 'x ** y' для возведения в степень): ")
+    code = input('Введите выражение для операции с переменными x и y: ')
 
     try:
-        compiled_code = compile(f"lambda x, y: {code}", "<string>", "eval")
+        compiled_code = compile(f'lambda x, y: {code}', '<string>', 'eval')
         mathOperations[new_symbol] = eval(compiled_code)
-        print(f"Операция '{new_symbol}' успешно добавлена!")
+        print(f'Операция {new_symbol} успешно добавлена!')
     except Exception as e:
-        print(f"Ошибка при добавлении новой операции: {e}") 
-    
+        print(f'Ошибка при добавлении новой операции: {e}') 
+
+
 def showListOfMathOperations():
     for _ in mathOperations:
         print(_)
 
+
 def taskOne():
     while True:
-        print("\nМеню:")
-        print("1. Выполнить операцию")
-        print("2. Добавить новую операцию")
-        print("3. Показать доступные операции")
-        print("4. Выход")
+        print('\nМеню:')
+        print('1. Выполнить операцию')
+        print('2. Добавить новую операцию')
+        print('3. Показать доступные операции')
+        print('4. Выход')
 
-        choice = int(input("Выберите действие: "))
+        choice = int(input('Выберите действие: '))
         match choice:
             case 1:
                 getNumbers()
@@ -54,7 +59,7 @@ def taskOne():
             case 3:
                 showListOfMathOperations()
             case 4:
-                print("Выход из программы")
+                print('Выход из программы')
                 break
 
 
@@ -71,69 +76,73 @@ def taskTwo():
     def sort_students(students, grow=True):
         return sorted(students, key=lambda student: student[1], reverse=not grow)
 
-    print("Список студентов до сортировки:")
+    print('Список студентов до сортировки:')
     for student in students:
-        print(f"{student[0]}: {student[1]}")
+        print(f'{student[0]}: {student[1]}')
 
-    order = input("Введите '>' для сортировки по возрастанию или '<' для сортировки по убыванию: ")
+    order = input('Введите '>' для сортировки по возрастанию или '<' для сортировки по убыванию: ')
 
     inputGrow = True if order == '>' else False
 
     sorted_students = sort_students(students, grow=inputGrow)
 
-    print("\nСписок студентов после сортировки:")
+    print('\nСписок студентов после сортировки:')
     for student in sorted_students:
-        print(f"{student[0]}: {student[1]}")
+        print(f'{student[0]}: {student[1]}')
 
 
 # Task 3
 counter = 0
+
+
 def getCounter():
     global counter
     counter += 1
-    print(f"Функцию вызвали {counter} раз")
+    print(f'Функцию вызвали {counter} раз')
+
 
 def resetCounter():
     global counter
     counter = 0
-    print("Счетчик был сброшен на ноль.")
+    print('Счетчик был сброшен на ноль.')
+
 
 def taskThree():
     while True:
-        print("\nМеню:")
-        print("1. Вызвать функцию-счетчик")
-        print("2. Сбросить счетчик")
-        print("3. Выход")
-        
-        choice = input("Выберите действие (1/2/3): ")
+        print('\nМеню:')
+        print('1. Вызвать функцию-счетчик')
+        print('2. Сбросить счетчик')
+        print('3. Выход')  
+        choice = input('Выберите действие (1/2/3): ')
 
-        if choice == "1":
-                number = int(input("Сколько раз хотите вызвать функцию: "))
-                for _ in range(number):
-                    getCounter()
-        if choice == "2":
+        if choice == '1':
+            number = int(input('Сколько раз хотите вызвать функцию: '))
+            for _ in range(number):
+                getCounter()
+            if choice == '2':
                 resetCounter()
-        if choice == "3":
-                print("Выход из программы.")
-                break
+        if choice == '3':
+            print('Выход из программы.')
+            break
 
 
 # Task 4
 def sales(prices, discountFunction):
     return [discountFunction(price) for price in prices]
 
+
 def taskFour():
-    prices = list(map(float, input("Введите через пробел цену на Ваши товары и нажмите Enter: ").split()))
+    prices = list(map(float, input('Введите через пробел цену на Ваши товары и нажмите Enter: ').split()))
 
-    print("Начальные цены товаров:", prices)
+    print('Начальные цены товаров:', prices)
 
-    print("\nВыберите тип скидки:")
-    print("1. Скидка 10%")
-    print("2. Скидка 20%")
-    print("3. Скидка 50 рублей на каждую покупку")
-    print("4. Скидка 15%, если товар дороже 200 рублей, иначе 5%")
+    print('\nВыберите тип скидки:')
+    print('1. Скидка 10%')
+    print('2. Скидка 20%')
+    print('3. Скидка 50 рублей на каждую покупку')
+    print('4. Скидка 15%, если товар дороже 200 рублей, иначе 5%')
 
-    choice = input("Введите номер скидки (1/2/3/4): ")
+    choice = input('Введите номер скидки (1/2/3/4): ')
 
     if choice == '1':
         discountFunction = lambda price: price * 0.9
@@ -144,92 +153,97 @@ def taskFour():
     elif choice == '4':
         discountFunction = lambda price: price * 0.85 if price > 200 else price * 0.95
     else:
-        print("Ошибка: неверный выбор.")
+        print('Ошибка: неверный выбор.')
         return
     
     final_prices = sales(prices, discountFunction)
-    print("\nЦены товаров после применения скидки:", final_prices)
+    print('\nЦены товаров после применения скидки:', final_prices)
 
 
 # Task 5
 exchange_rates = {
-    "USD": 75,
-    "EUR": 90,
-    "GBP": 105,
-    "JPY": 0.55,
-    "CNY": 10.5,
-    "AUD": 50,
-    "CAD": 52,
-    "CHF": 82,
-    "INR": 1.0,
+    'USD': 75,
+    'EUR': 90,
+    'GBP': 105,
+    'JPY': 0.55,
+    'CNY': 10.5,
+    'AUD': 50,
+    'CAD': 52,
+    'CHF': 82,
+    'INR': 1.0,
 }
+
 
 def convert_currency(amount, currency):
 
     if currency in exchange_rates:
         return amount / exchange_rates[currency]
     else:
-        print(f"Ошибка: Валюта '{currency}' не найдена.")
+        print(f'Ошибка: Валюта {currency} не найдена.')
         return None
+
 
 def update_exchange_rate(currency, rate):
     exchange_rates[currency] = rate
-    print(f"Курс валюты '{currency}' обновлен на {rate}.")
+    print(f'Курс валюты {currency} обновлен на {rate}.')
+
 
 def add_currency(currency, rate):
     exchange_rates[currency] = rate
-    print(f"Валюта '{currency}' добавлена с курсом {rate}.")
+    print(f'Валюта {currency} добавлена с курсом {rate}.')
+
 
 def remove_currency(currency):
     if currency in exchange_rates:
         del exchange_rates[currency]
-        print(f"Валюта '{currency}' удалена.")
+        print(f'Валюта {currency} удалена.')
     else:
-        print(f"Ошибка: Валюта '{currency}' не найдена.")
+        print(f'Ошибка: Валюта {currency} не найдена.')
+
 
 def taskFive():
     while True:
-        print("\nМеню:")
-        print("1. Конвертировать рубли в валюту")
-        print("2. Обновить курс валюты")
-        print("3. Добавить новую валюту")
-        print("4. Удалить валюту")
-        print("5. Посмотреть текущие курсы валют")
-        print("6. Выход")
+        print('\nМеню:')
+        print('1. Конвертировать рубли в валюту')
+        print('2. Обновить курс валюты')
+        print('3. Добавить новую валюту')
+        print('4. Удалить валюту')
+        print('5. Посмотреть текущие курсы валют')
+        print('6. Выход')
         
-        choice = input("Выберите действие (1/2/3/4/5/6): ")
+        choice = input('Выберите действие (1/2/3/4/5/6): ')
         
         if choice == '1':
-            amount = float(input("Введите сумму в рублях: "))
-            currency = input("Введите валюту для конвертации: ").upper()
+            amount = float(input('Введите сумму в рублях: '))
+            currency = input('Введите валюту для конвертации: ').upper()
             converted_amount = convert_currency(amount, currency)
-            print(f"{amount} рублей = {converted_amount:.2f} {currency}")
+            print(f'{amount} рублей = {converted_amount:.2f} {currency}')
 
         elif choice == '2':
-            currency = input("Введите валюту для обновления курса: ").upper()
-            rate = float(input("Введите новый курс: "))
+            currency = input('Введите валюту для обновления курса: ').upper()
+            rate = float(input('Введите новый курс: '))
             update_exchange_rate(currency, rate)
 
         elif choice == '3':
-            currency = input("Введите новую валюту: ").upper()
-            rate = float(input("Введите курс новой валюты: "))
+            currency = input('Введите новую валюту: ').upper()
+            rate = float(input('Введите курс новой валюты: '))
             add_currency(currency, rate)
 
         elif choice == '4':
-            currency = input("Введите валюту для удаления: ").upper()
+            currency = input('Введите валюту для удаления: ').upper()
             remove_currency(currency)
 
         elif choice == '5':
-            print("Текущие курсы валют:")
+            print('Текущие курсы валют:')
             for currency, rate in exchange_rates.items():
-                print(f"{currency}: {rate} рублей")
+                print(f'{currency}: {rate} рублей')
 
         elif choice == '6':
-            print("Выход из программы.")
+            print('Выход из программы.')
             break
 
         else:
-            print("Ошибка: Неверный выбор. Пожалуйста, выберите снова.")
+            print('Ошибка: Неверный выбор. Пожалуйста, выберите снова.')
 
 
 # Task 6
@@ -244,96 +258,99 @@ def find_duplicates(users):
             unique_users.add(user)
     
     if duplicates:
-        print("Найдены дубликаты:", ", ".join(duplicates))
+        print('Найдены дубликаты:', ', '.join(duplicates))
     else:
-        print("Дубликатов не найдено.")
+        print('Дубликатов не найдено.')
     return list(unique_users)
+
 
 def remove_duplicates(users):
     return list(set(users))
 
+
 def taskSix():
     while True:
-        user_list = input("Введите имена пользователей через запятую: ").split(",")
+        user_list = input('Введите имена пользователей через запятую: ').split(',')
         user_list = [user.strip() for user in user_list]
-        unique_users = find_duplicates(user_list)
-        
-        print("Список без дубликатов:", unique_users)
+        unique_users = find_duplicates(user_list)  
+        print('Список без дубликатов:', unique_users)
 
-        repeat = input("Хотите ввести новый список? (да/нет): ").lower()
-        if repeat != "да":
+        repeat = input('Хотите ввести новый список? (да/нет): ').lower()
+        if repeat != 'да':
             break
 
 
 # Task 7
 menu = (
-    ("Паста", 500),
-    ("Салат", 300),
-    ("Суп", 400),
-    ("Бургер", 600),
-    ("Пицца", 700),
+    ('Паста', 500),
+    ('Салат', 300),
+    ('Суп', 400),
+    ('Бургер', 600),
+    ('Пицца', 700),
 )
 
 menu_list = list(menu)
 
+
 def show_menu(menu):
-    print("\nТекущее меню:")
+    print('\nТекущее меню:')
     for dish, price in menu:
-        print(f"{dish}: {price} руб.")
-    print("\n")
+        print(f'{dish}: {price} руб.')
+    print('\n')
+
 
 def filter_by_budget(budget, menu):
     affordable_dishes = list(filter(lambda x: x[1] <= budget, menu))
     
     if affordable_dishes:
-        print(f"Вы можете позволить себе следующие блюда:")
+        print(f'Вы можете позволить себе следующие блюда:')
         for dish, price in affordable_dishes:
-            print(f"{dish}: {price} руб.")
+            print(f'{dish}: {price} руб.')
     else:
-        print(f"К сожалению, на ваш бюджет нет доступных блюд.")
+        print(f'К сожалению, на ваш бюджет нет доступных блюд.')
 
 def add_dish(menu_list):
-    dish_name = input("Введите название нового блюда: ")
-    dish_price = int(input("Введите стоимость блюда: "))
+    dish_name = input('Введите название нового блюда: ')
+    dish_price = int(input('Введите стоимость блюда: '))
     menu_list.append((dish_name, dish_price))
-    print(f"Блюдо '{dish_name}' добавлено с ценой {dish_price} руб.")
+    print(f'Блюдо {dish_name} добавлено с ценой {dish_price} руб.')
 
 def update_dish_price(menu_list):
-    dish_name = input("Введите название блюда, цену которого нужно обновить: ")
+    dish_name = input('Введите название блюда, цену которого нужно обновить: ')
     for i, (name, price) in enumerate(menu_list):
         if name == dish_name:
-            new_price = int(input(f"Введите новую стоимость для блюда '{dish_name}': "))
+            new_price = int(input(f'Введите новую стоимость для блюда {dish_name}: '))
             menu_list[i] = (dish_name, new_price)
-            print(f"Цена блюда '{dish_name}' обновлена до {new_price} руб.")
+            print(f'Цена блюда {dish_name} обновлена до {new_price} руб.')
             break
     else:
-        print(f"Блюдо с названием '{dish_name}' не найдено в меню.")
+        print(f'Блюдо с названием {dish_name} не найдено в меню.')
 
 def taskSeven():
     while True:
-        print("\nЧто вы хотите сделать?")
-        print("1. Показать меню")
-        print("2. Показать блюда, которые вы можете позволить себе на ваш бюджет")
-        print("3. Добавить новое блюдо")
-        print("4. Обновить стоимость блюда")
-        print("5. Выйти")
+        print('\nЧто вы хотите сделать?')
+        print('1. Показать меню')
+        print('2. Показать блюда, которые вы можете позволить себе на ваш бюджет')
+        print('3. Добавить новое блюдо')
+        print('4. Обновить стоимость блюда')
+        print('5. Выйти')
 
-        choice = input("Введите номер действия: ")
+        choice = input('Введите номер действия: ')
 
-        if choice == "1":
+        if choice == '1':
             show_menu(menu_list)
-        elif choice == "2":
-            budget = int(input("Введите ваш бюджет: "))
+        elif choice == '2':
+            budget = int(input('Введите ваш бюджет: '))
             filter_by_budget(budget, menu_list)
-        elif choice == "3":
+        elif choice == '3':
             add_dish(menu_list)
-        elif choice == "4":
+        elif choice == '4':
             update_dish_price(menu_list)
-        elif choice == "5" or choice.lower() == "выход":
-            print("Выход из программы.")
+        elif choice == '5' or choice.lower() == 'выход':
+            print('Выход из программы.')
             break
         else:
-            print("Некорректный ввод. Пожалуйста, выберите действие от 1 до 5.")
+            print('Некорректный ввод. Пожалуйста, выберите действие от 1 до 5.')
 
 
 
@@ -352,78 +369,78 @@ def taskEight():
 # Task 9
 def display_products(products):
     if not products:
-        print("Список продуктов пуст.")
+        print('Список продуктов пуст.')
         return
-    print("\nСписок продуктов и их цены:")
+    print('\nСписок продуктов и их цены:')
     for product, price in products.items():
-        print(f"{product}: {price} руб.")
+        print(f'{product}: {price} руб.')
 
 def search_product(products, product_name):
     price = products.get(product_name)
     if price is not None:
-        print(f"Цена '{product_name}': {price} руб.")
+        print(f'Цена {product_name}: {price} руб.')
     else:
-        print(f"Продукт '{product_name}' не найден.")
+        print(f'Продукт {product_name} не найден.')
 
 def edit_product_price(products, product_name, new_price):
     if product_name in products:
         products[product_name] = new_price
-        print(f"Цена продукта '{product_name}' обновлена до {new_price} руб.")
+        print(f'Цена продукта {product_name} обновлена до {new_price} руб.')
     else:
-        print(f"Продукт '{product_name}' не найден.")
+        print(f'Продукт {product_name} не найден.')
 
 def delete_product(products, product_name):
     if product_name in products:
         del products[product_name]
-        print(f"Продукт '{product_name}' удалён.")
+        print(f'Продукт {product_name} удалён.')
     else:
-        print(f"Продукт '{product_name}' не найден.")
+        print(f'Продукт {product_name} не найден.')
 
 def add_product(products, product_name, price):
     products[product_name] = price
-    print(f"Продукт '{product_name}' добавлен с ценой {price} руб.")
+    print(f'Продукт {product_name} добавлен с ценой {price} руб.')
 
 def taskNine():
     products = {}
 
     while True:
-        print("\nВыберите действие:")
-        print("1. Добавить продукт")
-        print("2. Искать продукт")
-        print("3. Редактировать цену продукта")
-        print("4. Удалить продукт")
-        print("5. Вывести весь список продуктов")
-        print("6. Выйти")
+        print('\nВыберите действие:')
+        print('1. Добавить продукт')
+        print('2. Искать продукт')
+        print('3. Редактировать цену продукта')
+        print('4. Удалить продукт')
+        print('5. Вывести весь список продуктов')
+        print('6. Выйти')
 
-        choice = input("Введите номер действия: ")
+        choice = input('Введите номер действия: ')
 
-        if choice == "1":
-            name = input("Введите название продукта: ")
-            price = float(input("Введите цену продукта: "))
+        if choice == '1':
+            name = input('Введите название продукта: ')
+            price = float(input('Введите цену продукта: '))
             add_product(products, name, price)
 
-        elif choice == "2":
-            name = input("Введите название продукта для поиска: ")
+        elif choice == '2':
+            name = input('Введите название продукта для поиска: ')
             search_product(products, name)
 
-        elif choice == "3":
-            name = input("Введите название продукта для редактирования: ")
-            new_price = float(input("Введите новую цену продукта: "))
+        elif choice == '3':
+            name = input('Введите название продукта для редактирования: ')
+            new_price = float(input('Введите новую цену продукта: '))
             edit_product_price(products, name, new_price)
 
-        elif choice == "4":
-            name = input("Введите название продукта для удаления: ")
+        elif choice == '4':
+            name = input('Введите название продукта для удаления: ')
             delete_product(products, name)
 
-        elif choice == "5":
+        elif choice == '5':
             display_products(products)
 
-        elif choice == "6":
-            print("Выход из программы.")
+        elif choice == '6':
+            print('Выход из программы.')
             break
 
         else:
-            print("Некорректный ввод. Пожалуйста, выберите действие от 1 до 6.")
+            print('Некорректный ввод. Пожалуйста, выберите действие от 1 до 6.')
 
 
 # Task 11
@@ -439,7 +456,7 @@ def read_sales_data(filename):
 
 def write_new_sale(filename, product, quantity, price):
     with open(filename, 'a', encoding='utf-8') as file:
-        file.write(f"{product}-{quantity}-{price}\n")
+        file.write(f'{product}-{quantity}-{price}\n')
 
 def taskEleven():
     filename = './files/lab_3_task_11.txt'
@@ -449,25 +466,25 @@ def taskEleven():
     if sales:
         max_product = max(sales, key=sales.get)
         min_product = min(sales, key=sales.get)
-        print("Общая сумма продаж по продуктам:")
+        print('Общая сумма продаж по продуктам:')
         for product, total in sales.items():
-            print(f"{product}: {total:.2f}")
-        print(f"\nПродукт с наибольшей суммой продаж: {max_product} ({sales[max_product]:.2f})")
-        print(f"Продукт с наименьшей суммой продаж: {min_product} ({sales[min_product]:.2f})")
+            print(f'{product}: {total:.2f}')
+        print(f'\nПродукт с наибольшей суммой продаж: {max_product} ({sales[max_product]:.2f})')
+        print(f'Продукт с наименьшей суммой продаж: {min_product} ({sales[min_product]:.2f})')
     else:
-        print("Данные о продажах отсутствуют.")
+        print('Данные о продажах отсутствуют.')
     
-    add_more = input("\nХотите добавить новую запись о продаже? (да/нет): ").strip().lower()
+    add_more = input('\nХотите добавить новую запись о продаже? (да/нет): ').strip().lower()
     if add_more == 'да':
-        product = input("Введите название продукта: ")
-        quantity = int(input("Введите количество: "))
-        price = float(input("Введите цену: "))
+        product = input('Введите название продукта: ')
+        quantity = int(input('Введите количество: '))
+        price = float(input('Введите цену: '))
         write_new_sale(filename, product, quantity, price)
-        print("Новая запись добавлена. Пересчитываем суммы продаж.")
+        print('Новая запись добавлена. Пересчитываем суммы продаж.')
 
 # Task 12
 def taskTwelve():
-    search_word = input("Введите слово для поиска: ").lower()
+    search_word = input('Введите слово для поиска: ').lower()
 
     occurrences = 0
     matching_lines = []
@@ -477,16 +494,16 @@ def taskTwelve():
         for line_number, line in enumerate(file, start=1):
             if search_word in line.lower():
                 occurrences += line.lower().count(search_word)
-                matching_lines.append(f"Строка {line_number}: {line.strip()}")
+                matching_lines.append(f'Строка {line_number}: {line.strip()}')
 
 
-    print(f"Количество вхождений слова '{search_word}': {occurrences}")
+    print(f'Количество вхождений слова {search_word}: {occurrences}')
     if occurrences > 0:
-        print("Строки, содержащие это слово:")
+        print('Строки, содержащие это слово:')
         for match in matching_lines:
             print(match)
     else:
-        print("Слово не найдено в файле.")
+        print('Слово не найдено в файле.')
 
 
 # Task 13
@@ -498,7 +515,7 @@ def taskThirteen():
         for line in reversed(lines):
             reversed_file.write(line + '\n')
 
-    print("Файл успешно создан с перевернутыми строками.")
+    print('Файл успешно создан с перевернутыми строками.')
 
 
 # Task 14
@@ -507,146 +524,146 @@ import pandas as pd
 
 def load_data(file_name):
     try:
-        return pd.read_csv(file_name, sep=":", names=["Имя", "Оценка"], header=0)
+        return pd.read_csv(file_name, sep=':', names=['Имя', 'Оценка'], header=0)
     except FileNotFoundError:
-        return pd.DataFrame(columns=["Имя", "Оценка"])
+        return pd.DataFrame(columns=['Имя', 'Оценка'])
 
 
 def calculate_average(data):
-    return data["Оценка"].mean()
+    return data['Оценка'].mean()
 
 
 def get_below_average_students(data, average):
-    return data[data["Оценка"] < average]
+    return data[data['Оценка'] < average]
 
 
 def save_data(data, file_name):
-    data.to_csv(file_name, sep=":", index=False, header=True)
+    data.to_csv(file_name, sep=':', index=False, header=True)
 
 
 def add_student(file_name, name, grade):
     data = load_data(file_name)
-    new_student = pd.DataFrame({"Имя": [name], "Оценка": [grade]})
+    new_student = pd.DataFrame({'Имя': [name], 'Оценка': [grade]})
     data = pd.concat([data, new_student], ignore_index=True)
     save_data(data, file_name)
     return data
 
 
 def taskFourteen():
-    file_name = "./files/lab_3_task_14.csv"
+    file_name = './files/lab_3_task_14.csv'
     while True:
-        print("\nВыберите действие:")
-        print("1. Показать студентов с оценками ниже средней")
-        print("2. Добавить нового студента")
-        print("3. Пересчитать среднюю оценку")
-        print("4. Выйти")
+        print('\nВыберите действие:')
+        print('1. Показать студентов с оценками ниже средней')
+        print('2. Добавить нового студента')
+        print('3. Пересчитать среднюю оценку')
+        print('4. Выйти')
         
-        choice = input("Введите номер действия: ")
+        choice = input('Введите номер действия: ')
         
-        if choice == "1":
+        if choice == '1':
             data = load_data(file_name)
             if data.empty:
-                print("Файл пуст. Добавьте студентов.")
+                print('Файл пуст. Добавьте студентов.')
                 continue
-            data["Оценка"] = pd.to_numeric(data["Оценка"], errors="coerce")
+            data['Оценка'] = pd.to_numeric(data['Оценка'], errors='coerce')
             average = calculate_average(data)
-            print(f"Средняя оценка: {average:.2f}")
+            print(f'Средняя оценка: {average:.2f}')
             below_average_students = get_below_average_students(data, average)
             if below_average_students.empty:
-                print("Нет студентов с оценками ниже средней.")
+                print('Нет студентов с оценками ниже средней.')
             else:
-                print("Студенты с оценками ниже средней:")
+                print('Студенты с оценками ниже средней:')
                 print(below_average_students)
         
-        elif choice == "2":
-            name = input("Введите имя студента: ")
+        elif choice == '2':
+            name = input('Введите имя студента: ')
             try:
-                grade = float(input("Введите оценку студента: "))
+                grade = float(input('Введите оценку студента: '))
             except ValueError:
-                print("Оценка должна быть числом.")
+                print('Оценка должна быть числом.')
                 continue
             data = add_student(file_name, name, grade)
-            print("Студент добавлен. Текущие данные:")
+            print('Студент добавлен. Текущие данные:')
             print(data)
         
-        elif choice == "3":
+        elif choice == '3':
             data = load_data(file_name)
             if data.empty:
-                print("Файл пуст. Добавьте студентов.")
+                print('Файл пуст. Добавьте студентов.')
                 continue
-            data["Оценка"] = pd.to_numeric(data["Оценка"], errors="coerce")
+            data['Оценка'] = pd.to_numeric(data['Оценка'], errors='coerce')
             average = calculate_average(data)
-            print(f"Средняя оценка пересчитана: {average:.2f}")
+            print(f'Средняя оценка пересчитана: {average:.2f}')
         
-        elif choice == "4":
-            print("Выход из программы.")
+        elif choice == '4':
+            print('Выход из программы.')
             break
         
         else:
-            print("Неверный выбор. Попробуйте снова.")
+            print('Неверный выбор. Попробуйте снова.')
 
 
 # Task 15
 import datetime
 
-LOG_FILE = "files/errors.log"
+LOG_FILE = 'files/errors.log'
 
 
 def log_error(error_message):
-    with open(LOG_FILE, "a") as file:
-        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        file.write(f"[{timestamp}] {error_message}\n")
+    with open(LOG_FILE, 'a') as file:
+        timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        file.write(f'[{timestamp}] {error_message}\n')
 
 
 def get_last_errors(n=5):
     try:
-        with open(LOG_FILE, "r") as file:
+        with open(LOG_FILE, 'r') as file:
             lines = file.readlines()
             return lines[-n:] if len(lines) >= n else lines
     except FileNotFoundError:
-        return ["Лог-файл отсутствует."]
+        return ['Лог-файл отсутствует.']
 
 
 def clear_logs():
-    open(LOG_FILE, "w").close()
+    open(LOG_FILE, 'w').close()
 
 
 def TaskFifteen():
     while True:
-        print("\nМеню:")
-        print("1. Ввести число")
-        print("2. Показать последние 5 ошибок")
-        print("3. Очистить лог-файл")
-        print("4. Выйти")
+        print('\nМеню:')
+        print('1. Ввести число')
+        print('2. Показать последние 5 ошибок')
+        print('3. Очистить лог-файл')
+        print('4. Выйти')
         
-        choice = input("Выберите действие: ")
+        choice = input('Выберите действие: ')
         
-        if choice == "1":
+        if choice == '1':
             try:
-                num = int(input("Введите целое число: "))
-                print(f"Вы ввели число: {num}")
+                num = int(input('Введите целое число: '))
+                print(f'Вы ввели число: {num}')
             except ValueError as e:
-                error_message = "Ошибка: Неверный формат данных (ожидается целое число)."
+                error_message = 'Ошибка: Неверный формат данных (ожидается целое число).'
                 print(error_message)
                 log_error(error_message)
-        elif choice == "2":
+        elif choice == '2':
             errors = get_last_errors()
-            print("\nПоследние ошибки:")
+            print('\nПоследние ошибки:')
             if errors:
                 for error in errors:
                     print(error.strip())
             else:
-                print("Ошибки отсутствуют.")
-        elif choice == "3":
-            confirm = input("Вы уверены, что хотите очистить лог-файл? (да/нет): ")
-            if confirm.lower() == "да":
+                print('Ошибки отсутствуют.')
+        elif choice == '3':
+            confirm = input('Вы уверены, что хотите очистить лог-файл? (да/нет): ')
+            if confirm.lower() == 'да':
                 clear_logs()
-                print("Лог-файл очищен.")
+                print('Лог-файл очищен.')
             else:
-                print("Очистка отменена.")
-        elif choice == "4":
-            print("Выход из программы.")
+                print('Очистка отменена.')
+        elif choice == '4':
+            print('Выход из программы.')
             break
         else:
-            print("Неверный выбор. Пожалуйста, попробуйте снова.")
+            print('Неверный выбор. Пожалуйста, попробуйте снова.')
 
